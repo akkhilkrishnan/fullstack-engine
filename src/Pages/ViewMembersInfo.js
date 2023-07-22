@@ -12,12 +12,16 @@ function ViewMembersInfo() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(),
+      // body: JSON.stringify(),
     })
       .then((response) => {
+        console.log(response.data)
         return response.json();
       })
-      .then((data) => setMembersData(data));
+      .then((data) => {
+        console.log('data', data);
+        setMembersData(data)
+      });
   };
 
   const extendHandle = (record_index) => {
@@ -28,71 +32,81 @@ function ViewMembersInfo() {
   };
 
   const currencyFormatter = (amount) => {
-    let paidamount = amount.toLocaleString("en-IN", {
-      style: "currency",
-      currency: "INR",
-    });
-    return paidamount;
+    return Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(amount);
   };
   const calculateExpiryDate = (doj, subscription) => {
     var joiningDate = new Date(doj);
     let expiryDate;
     let expireFlag;
+    console.log('asdasd', joiningDate, subscription)
     switch (subscription) {
       case "Monthly":
         expiryDate = joiningDate.setDate(joiningDate.getDate() + 30);
         break;
-      case "quarterly":
+      case "Quarterly":
         expiryDate = joiningDate.setDate(joiningDate.getDate() + 90);
         break;
-      case "Half yearly":
+      case "Half-yearly":
         expiryDate = joiningDate.setDate(joiningDate.getDate() + 180);
         break;
       case "Annual":
         expiryDate = joiningDate.setDate(joiningDate.getDate() + 365);
         break;
     }
+    // expiryDate = joiningDate.setDate(joiningDate.getDate() + 30);
+
     expireFlag = new Date(expiryDate) <= new Date() ? true : false;
     expiryDate = new Date(expiryDate).toString().slice(0, 15);
-
+    console.log('checckkk', expireFlag, expiryDate)
     return { expiryDate, expireFlag };
   };
   return (
     <div className="view-container">
-      <div className="record-style">
-        <h4>Member name</h4>
-        <h4>Date of joining</h4>
-        <h4>Paid Amount</h4>
-        <h4>Expiry Date</h4>
+      <div className="first-record-style">
+        <h4>MEMBER NAME</h4>
+        <h4>DATE OF JOINING</h4>
+        <h4>SUBSCRIPTION</h4>
+        <h4>PAID AMOUNT</h4>
+        <h4>EXPIRY DATE</h4>
       </div>
 
       {membersData.map((member, index) => {
         return (
-          <div >
-            <div key={Math.random()} className="record-style">
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', alignItems: 'center' }}>
+            <div key={index} className="record-style" 
+            //  style={
+            //       calculateExpiryDate(member.doj, member.subscription).expireFlag
+            //         ? { backgroundColor: "#DC0000" }
+            //         : { backgroundColor: "#4AAc2c"}
+            //     }
+                >
               <div
                 style={
-                  calculateExpiryDate(member.DOJ, member.package).expireFlag
-                    ? { color: "red", fontWeight: 500 }
-                    : { color: "green", fontWeight: 500 }
+                  calculateExpiryDate(member.doj, member.subscription).expireFlag
+                    ? { color: "#DC0000", fontWeight: 400, fontSize: "16px" }
+                    : { color: "#4AAc2c", fontWeight: 400, fontSize: "16px" }
                 }
               >
                 {member.name}
               </div>
-              <div>{member.DOJ}</div>
+              <div>{new Date(member.doj).toString().slice(0, 15)}</div>
+              <div>{member.subscription ? member.subscription : 'Monthly'}</div>
               <div>{currencyFormatter(member.amountpaid)}</div>
               <div className="exp-field-style">
-                {calculateExpiryDate(member.DOJ, member.package).expiryDate}
-                <Button
-                variant="contained"
-                  onClick={() => {
-                    extendHandle(index);
-                  }}
-                >
-                  update Membership
-                </Button>
+                {calculateExpiryDate(member.doj, member.subscription).expiryDate}
+
               </div>
+              <button
+                className="update-btn"
+                variant="contained"
+                onClick={() => {
+                  extendHandle(index)
+                }}
+              >
+                Update Subscription
+              </button>
             </div>
+
           </div>
         );
       })}
