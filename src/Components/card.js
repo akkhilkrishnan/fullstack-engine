@@ -18,7 +18,8 @@ function Card(props) {
   let workoutList = workout_obj.workouts
 
   useEffect(() => {
-    setShowsave(true)
+
+    weeklyWorkout.length < 5 ? setShowsave(true) : setShowsave(false)
   }, [workoutList])
 
   const addWorkoutHandle = () => {
@@ -40,44 +41,44 @@ function Card(props) {
   }
   return (
     <>
-    <div className="card-timeline-container">
-      {workoutList && workoutList.length > 0 && <div><div className="card-style">
-      <div className="card-heading"> <div>*{days[weeklyWorkout.length] +' '+workout_obj.workouttype} Workout *</div> {showSave && <img src="assets/images/add-workout.svg" alt="logo image" onClick={async () => { addWorkoutHandle() }} />}</div>
-        <ol>
+      <div className="card-timeline-container">
+        {workoutList && workoutList.length > 0 && <div><div className="card-style">
+          <div className="card-heading"> <div>*{days[weeklyWorkout.length] + ' ' + workout_obj.workouttype} Workout *</div> {showSave && <img src="assets/images/add-workout.svg" alt="logo image" onClick={async () => { addWorkoutHandle() }} />}</div>
+          <ol>
 
-          {workout_obj.workouts.map((workout, i) => {
-            return <li
-              key={i}>{workout}</li>;
-          })}
-        </ol>
-        <div className="timing-style">
-          <div>
-            <p>
-              ON time:{' ' + workout_obj.onTime}
-            </p>
-            <p>
-              OFF time:{' ' + workout_obj.offTime}
-            </p>
-          </div>
-          <div>
-            <p>
-              Sets:{' ' + workout_obj.sets}
-            </p>
-            <p>
-              Laps :{' ' + workout_obj.laps}
-            </p>
+            {workout_obj.workouts.map((workout, i) => {
+              return <li
+                key={i}>{workout}</li>;
+            })}
+          </ol>
+          <div className="timing-style">
+            <div>
+              <p>
+                ON time:{' ' + workout_obj.onTime}
+              </p>
+              <p>
+                OFF time:{' ' + workout_obj.offTime}
+              </p>
+            </div>
+            <div>
+              <p>
+                Sets:{' ' + workout_obj.sets}
+              </p>
+              <p>
+                Laps :{' ' + workout_obj.laps}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-        {!showSave && weeklyWorkout.length > 0 && <p className="success-style">{successMsg + ' ' + days[weeklyWorkout.length - 1] + '!'}</p>}
-      </div>
-      }
-      <Timeline
-        workoutList={workoutList}
-        weeklyWorkout={weeklyWorkout}
-        days={days} />
+          {!showSave && weeklyWorkout.length > 0 && <p className="success-style">{successMsg + ' ' + days[weeklyWorkout.length - 1] + '!'}</p>}
         </div>
-       <SaveActions weeklyWorkout={weeklyWorkout}/>
+        }
+        <Timeline
+          workoutList={workoutList}
+          weeklyWorkout={weeklyWorkout}
+          days={days} />
+      </div>
+      <SaveActions weeklyWorkout={weeklyWorkout} />
     </>
   )
 }

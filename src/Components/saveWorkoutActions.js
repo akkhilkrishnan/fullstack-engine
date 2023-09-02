@@ -6,7 +6,7 @@ const {weeklyWorkout}=props
 // const [weeklyWorkout, setWeeklyWorkout] = useState([]);
 
 const saveWorkouthandle = () => {
-weeklyWorkout=[]
+// weeklyWorkout=[]
 }
     return(<> <div className="save-btn-container">
     {

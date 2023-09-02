@@ -17,8 +17,8 @@
 }
 
 .workout-layout {
-  padding-top: 60px;
-  width: 90%;
+  padding-top:50px;
+  width: 95%;
   text-align: left;
   margin: auto;
   display: flex;
@@ -108,6 +108,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  cursor: pointer;
 
   div {}
 
@@ -235,10 +236,17 @@
 }
 
 .type-style {
+  width: 20%;
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
-  gap: 30px;
+  gap: 15px;
+  .css-ahj2mt-MuiTypography-root{
+    font-size: 14px !important;
+  }
+  .css-n5p0mp-MuiSvgIcon-root{
+    // width: 30px;
+    // height: 20px;
+  }
 }
 
 .timing-style {
@@ -331,9 +339,8 @@
 
 .timing-record {
   grid-template-columns: 1fr 1fr;
-  grid-gap: 5.5% 12.5%;
+  grid-gap: 5% 5%;
   display: flex;
-
   .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
     width: 100px !important;
   }
@@ -439,9 +446,6 @@
   }
 }
 
-.type-style {
-  width: 40%;
-}
 
 .card-timeline-container {
   display: flex;

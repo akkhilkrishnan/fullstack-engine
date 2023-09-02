@@ -18,10 +18,11 @@
 //   console.log(`Server is running on port: ${port}`);
 // });
 
-
+// import { ObjectId } from "bson"
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const { ObjectId } = require('mongodb');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
@@ -40,18 +41,35 @@ async function run() {
   try {
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("members").command({ ping: 1 });
+    // await client.db("members").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     data = await client.db('Members').collection('Members').find().toArray()
   } finally {
     await client.close();
   }
-  // return data
 }
+var memberDetails;
 
-run().catch(console.dir);
+const fetchMemberDetails = async (id) => {
+  try {
+    await client.connect();
+    memberDetails = await client.db('Members').collection('Members').find({_id:new ObjectId(id)})
+    await client.close();
+  }
+  finally {
+    await client.close();
+  }
+  // console.log('member details::::::', memberDetails)
+}
+//64bc19c5f6f36df9fc6439ef
+
+app.get("/fetchMemberDetails", (req, res) => {
+  fetchMemberDetails().catch(console.dir);
+  res.send(data);
+})
+
 app.get("/data", (req, res) => {
-run().catch(console.dir);
+  run().catch(console.dir);
   res.send(data);
 })
 app.post("/addmember", async (req, res) => {

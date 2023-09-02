@@ -12,7 +12,10 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Form } from "react-bootstrap";
 function DesignWorkoutPage() {
   let workoutListArr = [];
   const [workout_type, setWorkout_type] = useState("cardio");
@@ -62,9 +65,9 @@ function DesignWorkoutPage() {
     return workout_obj
   }
   return (
-    <div className="workout-layout">     
+    <div className="workout-layout">
       <div className="type-style">
-      {/* <h2>Workout Designer</h2> */}
+        {/* <div style={{fontSize:"20px"}}>Workout Designer</div> */}
         <FormControl >
           <InputLabel id="demo-simple-select-label">Workout Type</InputLabel>
           <Select
@@ -74,43 +77,59 @@ function DesignWorkoutPage() {
             label="Type of workout"
             onChange={handleChange}
             size={'small'}
+            // prop sx={{ width: 200 }}
+
           >
             <MenuItem value="strength">Strength</MenuItem>
             <MenuItem value="cardio">Cardio</MenuItem>
             <MenuItem value="core">Core</MenuItem>
           </Select>
         </FormControl>
-
+        <FormControl>
+          <LocalizationProvider
+            size="small"
+            dateAdapter={AdapterDayjs}
+          >
+            <DatePicker
+              label="Start Date"
+              required
+              slotProps={{ textField: { size: 'small' } }}
+              // value={memberDetails.dob}
+              // onChange={(newValue) => (memberDetails['dob'] = new Date(newValue))}
+              // prop sx={{ width: 200 }}
+            />
+          </LocalizationProvider>
+        </FormControl>
         <FormControl>
           <FormLabel id="demo-row-radio-buttons-group-label">Specifications</FormLabel>
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
-          >
-            <FormControlLabel value="bodyweight" control={<Radio />} label="Body Weight" />
-            <FormControlLabel value="equipment" control={<Radio />} label="Equipment Based" />
-            <FormControlLabel value="both" control={<Radio />} label="Combined" />
-            <FormControlLabel
+            prop sx={{ width: 200 }}
+            >
+            <FormControlLabel value="bodyweight" control={<Radio size="small" />} label="Body Weight" />
+            <FormControlLabel value="equipment" control={<Radio size="small" />} label="Equipment Based" />
+            <FormControlLabel value="both" control={<Radio size="small" />} label="Combined" />
+            {/* <FormControlLabel
               value="disabled"
               disabled
-              control={<Radio />}
+              control={<Radio size="small" />}
               label="other"
               size={'small'}
-            />
+            /> */}
           </RadioGroup>
         </FormControl>
-        <div className="input-field-style">
+        <FormControl>
           <TextField
             id="standard-basic"
             label="No of workouts"
             type="number"
             size={"small"}
-            value={noOfWorkouts }
+            value={noOfWorkouts}
             onChange={(e) => setNoOfWorkouts(e.target.value)}
           />
-
-        </div>
+</FormControl>
         <div className="timing-record">
           <TextField
             id="standard-basic"
@@ -144,8 +163,8 @@ function DesignWorkoutPage() {
           />
         </div>
         <Button className="btn-style" variant="contained" onClick={handleClick}>
-        Frame Workout
-      </Button>
+          Frame Workout
+        </Button>
       </div>
 
 

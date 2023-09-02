@@ -12,6 +12,12 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
@@ -66,7 +72,7 @@ function GetMemberInfo() {
                 label="Member Name"
                 value={memberDetails.name}
                 onChange={event => (memberDetails['name'] = event.target.value)}
-                prop sx={{ width: 400 }}
+                prop sx={{ width: 300 }}
               />
 
               <LocalizationProvider
@@ -78,9 +84,23 @@ function GetMemberInfo() {
                   required
                   slotProps={{ textField: { size: 'small' } }} value={memberDetails.dob}
                   onChange={(newValue) => (memberDetails['dob'] = new Date(newValue))}
-                  prop sx={{ width: 350 }}
+                  prop sx={{ width: 200 }}
                 />
               </LocalizationProvider>
+              <FormControl>
+                <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  value={memberDetails.gender}
+                  onChange={(newValue) => (memberDetails['gender'] = newValue.target.value)}
+                  defaultValue="female"
+                  >
+                  <FormControlLabel value="female" control={<Radio size="small" />} label="Female" />
+                  <FormControlLabel value="male" control={<Radio size="small"/>} label="Male" />
+                  <FormControlLabel value="other" control={<Radio size="small"/>} label="Other" />
+
+                </RadioGroup>
+              </FormControl>
             </div>
           </div >
           <hr style={{ color: "#3088ed" }} />
@@ -98,6 +118,7 @@ function GetMemberInfo() {
                 onChange={(newValue) => (memberDetails['phonenumber'] = newValue.target.value)}
               />
               <TextField
+              type="email"
                 size="small"
                 id="standard-basic"
                 label="Email Id"
@@ -116,7 +137,6 @@ function GetMemberInfo() {
             </div>
           </div>
           <hr />
-
 
           <div style={{ marginBottom: "30px" }}>
 
@@ -170,6 +190,41 @@ function GetMemberInfo() {
                 variant="filled"
                 value={memberDetails.amountpaid}
                 onChange={(newValue) => (memberDetails['amountpaid'] = newValue.target.value)}
+              />
+            </div>
+          </div>
+          <hr />
+
+          <div style={{ marginBottom: "30px" }}>
+
+            <h5>Other Details</h5>
+            <div className="fields">
+              <TextField
+                required
+                size="small"
+                id="standard-basic"
+                label="height in cms"
+                variant="filled"
+                value={memberDetails.height}
+                onChange={(newValue) => (memberDetails['height'] = newValue.target.value)}
+              />
+              <TextField
+                required
+                size="small"
+                id="standard-basic"
+                label="Weight in Kgs"
+                variant="filled"
+                value={memberDetails.weight}
+                onChange={(newValue) => (memberDetails['weight'] = newValue.target.value)}
+              />
+              <TextField
+                required
+                size="small"
+                id="standard-basic"
+                label="BMI"
+                variant="filled"
+                value={memberDetails.bmi}
+                onChange={(newValue) => (memberDetails['bmi'] = newValue.target.value)}
               />
             </div>
           </div>
